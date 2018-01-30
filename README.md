@@ -70,6 +70,9 @@ tests(require('tape'), require('your-custom-point-store'), instance-of-needed-st
 - @mafintosh and @Feross for
   [abstract-chunk-store](https://github.com/Feross/abstract-chunk-store), which this README is heavily borrowed from.
 - @maxogden for starting the immensely useful `abstract-***-store` pattern.
+- @substack for all of the
+  [kdb-tree-store](https://github.com/substack/kdb-tree-store) tests that served
+  as a base for this module.
 
 ## License
 
