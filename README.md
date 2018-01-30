@@ -7,9 +7,7 @@
 An abstract point store is a data store that allows you to store, delete, and
 make spatial queries on a map comprised of many points. A point has 2 (or more)
 dimensional coordinates, and a value associated with it (that is compatible with
-the
-[comparable-storable-types](https://github.com/substack/comparable-storable-types)
-set of types).
+the [comparable-storable-types][cst] set of types).
 
 ## Install
 
@@ -19,56 +17,34 @@ npm install abstract-point-store
 
 ## Some modules that use this
 
-- [kdb-tree-store](https://github.com/peermaps/kdb-tree-store)
-- [grid-point-store](https://github.com/noffle/grid-point-store)
-- [geohash-point-store](https://github.com/noffle/geohash-point-store)
+- (COMING SOON) [kdb-tree-store](https://github.com/peermaps/kdb-tree-store)
+- (COMING SOON) [grid-point-store](https://github.com/noffle/grid-point-store)
+- (COMING SOON) [geohash-point-store](https://github.com/noffle/geohash-point-store)
 
 If you write a new one, send a PR adding it.
 
 ## API
 
-#### `pointStore = new PointStore(pointLength)`
+#### `pointStore = new PointStore(opts)`
 
-Create a new point store. Points must have a length of `pointLength`.
+Create a new point store. `opts` include:
 
-#### `pointStore.put(index, pointBuffer, [cb])`
+- (required) `opts.types`: a size-3 array of [comparable-storable-types][cst] strings: X coord, Y coord, value.
+- (optional) `opts.store`: a point-store-specific storage backend for the spatial data.
 
-Add a new point to the storage. Index should be an integer.
+#### `pointStore.insert(pt, value, [cb])`
 
-#### `pointStore.del(index, pointBuffer, [cb])`
+`pt` is a size-2 array with the coordinates of the point. `value` is the value
+to be associated with this point.
 
-Add a new point to the storage. Index should be an integer.
+#### `pointStore.query(bbox[, opts][, cb])`
 
-#### `pointStore.query(index, [options], cb)`
+Query for points with `bbox`, a size-2 array of the shape `[[minX,maxX],[minY,maxY]]`.
 
-Retrieve a point stored. Index should be an integer.
-Options include:
+Results are given as an array of points in `cb(err, results)`. Each element in
+`results` has a `point` and `value` property.
 
-``` js
-{
-  offset: pointByteOffset,
-  length: byteLength
-}
-```
-
-If the index doesn't exist in the storage an error should be returned.
-
-#### `pointStore.close([cb])`
-
-Close the underlying resource, e.g. if the store is backed by a file, this would close the
-file descriptor.
-
-#### `pointStore.destroy([cb])`
-
-Destroy the file data, e.g. if the store is backed by a file, this would delete the file
-from the filesystem.
-
-#### `pointStore.pointLength`
-
-Expose the point length from the constructor so that code that receives a point
-store can know what size of points to write.
-
-## Test Suite
+## Test suite
 
 Publishing a test suite as a module lets multiple modules all ensure
 compatibility since they use the same test suite.
@@ -78,7 +54,7 @@ To use the test suite from this module you can
 
 An example of this can be found in the
 [grid-point-store](https://github.com/noffle/grid-point-store/blob/master/test.js)
-test suite.
+test setup.
 
 To run the tests simply pass your test module (`tap` or `tape` or any other
 compatible modules are supported) and your store's constructor (or a setup
@@ -86,7 +62,7 @@ function) in:
 
 ```js
 var tests = require('abstract-point-store/tests')
-tests(require('tape'), require('your-custom-point-store'))
+tests(require('tape'), require('your-custom-point-store'), instance-of-needed-storage-backend)
 ```
 
 ## Acknowledgements
@@ -98,3 +74,6 @@ tests(require('tape'), require('your-custom-point-store'))
 ## License
 
 ISC
+
+[cst]: https://github.com/substack/comparable-storable-types
+
