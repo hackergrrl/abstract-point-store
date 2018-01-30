@@ -2,6 +2,13 @@ var test = require('tape')
 var almostEqual = require('almost-equal')
 var FLT = almostEqual.FLT_EPSILON
 
+function approx (t, a, b) {
+  for (var i = 0; i < a.length; i++) {
+    t.ok(almostEqual(a[i], b[i], FLT, FLT),
+      'approx equal: ' + a[i] + ' ~ ' + b[i])
+  }
+}
+
 module.exports = function (test, Store, backend) {
   test('one point', function (t) {
     t.plan(3)
@@ -60,12 +67,5 @@ module.exports = function (test, Store, backend) {
       })
     }
   })
-}
-
-function approx (t, a, b) {
-  for (var i = 0; i < a.length; i++) {
-    t.ok(almostEqual(a[i], b[i], FLT, FLT),
-      'approx equal: ' + a[i] + ' ~ ' + b[i])
-  }
 }
 
