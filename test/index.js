@@ -111,6 +111,27 @@ module.exports = function (test, Store, backend) {
     }
   })
 
+  test('double point', function (t) {
+    t.plan(4)
+    var geo = Store({
+      types: [ 'float32', 'float32', 'uint32' ],
+      store: backend()
+    })
+    geo.insert([1,2], 444, function (err) {
+      t.ifError(err)
+      geo.insert([1,2], 555, function (err) {
+        t.ifError(err)
+        geo.query([1,2], function (err, pts) {
+          t.ifError(err)
+          t.deepEqual(pts, [
+            { point: [1,2], value: 444 },
+            { point: [1,2], value: 555 }
+          ])
+        })
+      })
+    })
+  })
+
   test('big', function (t) {
     var n = 5000
     var geo = Store({
