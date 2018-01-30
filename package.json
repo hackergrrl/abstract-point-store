@@ -1,0 +1,24 @@
+{
+  "name": "abstract-point-store",
+  "description": "Test suite & interface to implement a geographic point storage backend.",
+  "author": "Stephen Whitmore <sww@eight.net>",
+  "version": "0.0.0",
+  "repository": {
+    "url": "git://github.com/noffle/abstract-point-store.git"
+  },
+  "homepage": "https://github.com/noffle/abstract-point-store",
+  "bugs": "https://github.com/noffle/abstract-point-store/issues",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape test/*.js",
+    "lint": "standard"
+  },
+  "keywords": [
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "tape": "~4.6.2",
+    "standard": "~10.0.0"
+  },
+  "license": "ISC"
+}
