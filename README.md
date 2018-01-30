@@ -1,13 +1,13 @@
 # abstract-point-store
 
-> Test suite & interface to implement a geographic point storage backend.
+> Test suite & interface to implement a geographic (2D) point storage backend.
 
 ## Background
 
 An abstract point store is a data store that allows you to store, delete, and
-make spatial queries on a map comprised of many points. A point has 2 (or more)
-dimensional coordinates, and a value associated with it (that is compatible with
-the [comparable-storable-types][cst] set of types).
+make spatial queries over many points. A point has 2 (or more) dimensional
+coordinates, and a value associated with it (that is compatible with the
+[comparable-storable-types][cst] set of types).
 
 ## Install
 
