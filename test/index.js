@@ -176,6 +176,48 @@ module.exports = function (test, Store, backend) {
     }
   })
 
+  test('uint8 payload', function (t) {
+    var n = 20
+    var geo = Store({
+      types: [ 'float32', 'float32', 'float32', 'uint8' ],
+      store: backend()
+    })
+    var data = []
+    var pending = n
+    for (var i = 0; i < n; i++) (function (i) {
+      var x = Math.random() * 200 - 100
+      var y = Math.random() * 200 - 100
+      data.push({ point: [x,y], value: i })
+      geo.insert([x,y], i, function (err) {
+        t.ifError(err, 'insert ifError')
+        geo.query([x,y], function (err, pts) {
+          t.ifError(err, 'query ifError')
+          t.equal(pts.length, 1, 'single query result for single point')
+          if (pts[0]) {
+            approx(t, pts[0].point, [x,y])
+            t.equal(pts[0].value, i, 'point value')
+          } else t.fail('no point')
+          if (--pending === 0) check()
+        })
+      })
+    })(i)
+
+    function check () {
+      geo.query([[15,50],[-60,10]], function (err, pts) {
+        t.ifError(err)
+        var expected = data.filter(function (p) {
+          var pt = p.point
+          return pt[0] >= 15 && pt[0] <= 50
+            && pt[1] >= -60 && pt[1] <= 10
+        })
+        for (var i = 0; i < Math.max(pts.length, expected.length); i++) {
+          approx(t, pts[i], expected[i])
+        }
+        t.end()
+      })
+    }
+  })
+
   test('big', function (t) {
     var n = 5000
     var geo = Store({
