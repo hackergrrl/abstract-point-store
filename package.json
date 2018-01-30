@@ -8,7 +8,7 @@
   },
   "homepage": "https://github.com/noffle/abstract-point-store",
   "bugs": "https://github.com/noffle/abstract-point-store/issues",
-  "main": "index.js",
+  "main": "test/index.js",
   "scripts": {
     "test": "tape test/*.js",
     "lint": "standard"
