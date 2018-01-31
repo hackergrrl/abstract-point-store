@@ -25,14 +25,14 @@ If you write a new one, send a PR adding it.
 
 ## API
 
-#### `pointStore = new PointStore(opts)`
+### `pointStore = new PointStore(opts)`
 
 Create a new point store. `opts` include:
 
 - (required) `opts.types`: a size-3 array of [comparable-storable-types][cst] strings: X coord, Y coord, value.
 - (optional) `opts.store`: a point-store-specific storage backend for the spatial data.
 
-#### `pointStore.insert(pt, value, [cb])`
+### `pointStore.insert(pt, value, [cb])`
 
 `pt` is a size-2 array with the coordinates of the point. `value` is the value
 to be associated with this point.
@@ -41,7 +41,7 @@ to be associated with this point.
 
 Remove all points at location `pt` (`[x, y]`).
 
-#### `pointStore.query(bbox[, opts][, cb])`
+### `pointStore.query(bbox[, opts][, cb])`
 
 Query for points with `bbox`, a size-2 array of the shape `[[minX,maxX],[minY,maxY]]`.
 
