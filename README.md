@@ -37,6 +37,10 @@ Create a new point store. `opts` include:
 `pt` is a size-2 array with the coordinates of the point. `value` is the value
 to be associated with this point.
 
+### `pointStore.remove(pt, [cb])`
+
+Remove all points at location `pt` (`[x, y]`).
+
 #### `pointStore.query(bbox[, opts][, cb])`
 
 Query for points with `bbox`, a size-2 array of the shape `[[minX,maxX],[minY,maxY]]`.
