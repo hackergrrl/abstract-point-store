@@ -17,9 +17,9 @@ npm install abstract-point-store
 
 ## Some modules that use this
 
-- (COMING SOON) [kdb-tree-store](https://github.com/peermaps/kdb-tree-store)
-- (COMING SOON) [grid-point-store](https://github.com/noffle/grid-point-store)
-- (COMING SOON) [geohash-point-store](https://github.com/noffle/geohash-point-store)
+- [kdb-tree-store](https://github.com/peermaps/kdb-tree-store)
+- [grid-point-store](https://github.com/noffle/grid-point-store)
+- (*COMING SOON*) [geohash-point-store](https://github.com/noffle/geohash-point-store)
 
 If you write a new one, send a PR adding it.
 
