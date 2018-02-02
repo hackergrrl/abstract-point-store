@@ -20,7 +20,7 @@ module.exports = function (test, Store, backend) {
     })
     geo.insert([1,2], 9999, function (err) {
       t.ifError(err)
-      geo.query([[1,2],[1,2]], function (err, pts) {
+      geo.query([[1,1],[2,2]], function (err, pts) {
         t.ifError(err)
         t.deepEqual(pts, [ { point: [1,2], value: 9999 } ])
       })
