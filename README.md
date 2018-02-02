@@ -32,14 +32,19 @@ Create a new point store. `opts` include:
 - (required) `opts.types`: a size-3 array of [comparable-storable-types][cst] strings: X coord, Y coord, value.
 - (optional) `opts.store`: a point-store-specific storage backend for the spatial data.
 
-### `pointStore.insert(pt, value, [cb])`
+### `pointStore.insert(pt, value[ ,cb])`
 
 `pt` is a size-2 array with the coordinates of the point. `value` is the value
 to be associated with this point.
 
-### `pointStore.remove(pt, [cb])`
+### `pointStore.remove(pt[, opts][, cb])`
 
 Remove all points at location `pt` (`[x, y]`).
+
+Valid `opts` include:
+
+- (optional) `opts.value`: Only delete points at this location with this
+  specific value.
 
 ### `pointStore.query(bbox[, opts][, cb])`
 
