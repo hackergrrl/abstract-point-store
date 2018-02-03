@@ -376,6 +376,61 @@ module.exports = function (test, Store, backend) {
       })
     }
   })
+
+  test('remove points by value: buffer', function (t) {
+    t.plan(9)
+
+    var kdb = Store({
+      types: [ 'float32', 'float32', 'buffer[3]' ],
+      store: backend()
+    })
+
+    var points = [
+      { point: [1,2], value: new Buffer('444') },
+      { point: [1,2], value: new Buffer('333') },
+      { point: [1,2], value: new Buffer('555') }
+    ]
+
+    ;(function next (i) {
+      var p = points[i]
+      if (!p) return check1()
+      kdb.insert(p.point, p.value, function (err) {
+        t.ifError(err)
+        next(++i)
+      })
+    })(0)
+
+    function check1 () {
+      kdb.query([[-9,9],[-9,9]], function (err, pts) {
+        t.ifError(err)
+        pts = pts.sort(sortPt)
+        t.deepEqual(pts, [
+          { point: [1,2], value: new Buffer('444') },
+          { point: [1,2], value: new Buffer('333') },
+          { point: [1,2], value: new Buffer('555') }
+        ].sort(sortPt))
+        remove()
+      })
+    }
+    function remove () {
+      kdb.remove([1,2], { value: new Buffer('333') }, function (err) {
+        t.ifError(err)
+        kdb.remove([1,2], { value: new Buffer('555') }, function (err) {
+          t.ifError(err)
+          check2()
+        })
+      })
+    }
+    function check2 () {
+      kdb.query([[-9,9],[-9,9]], function (err, pts) {
+        t.ifError(err)
+        pts = pts.sort(sortPt)
+        t.deepEqual(pts, [
+          { point: [1,2], value: new Buffer('444') }
+        ].sort(sortPt))
+      })
+    }
+  })
 }
 
 function sortPt (a, b) {
